@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/imjac/Desktop/VT6002CEM_217014620/VT6002CEM_MB_217014620/app/src/main/res/layout/activity_main.xml" value="0.3179347826086957" />
+        <entry key="..\:/Users/imjac/Desktop/VT6002CEM_217014620/VT6002CEM_MB_217014620/app/src/main/res/layout/home_page_layout.xml" value="0.25" />
+      </map>
+    </option>
+  </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
