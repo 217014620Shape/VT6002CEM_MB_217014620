@@ -7,10 +7,10 @@
         <item>Shop 3</item>
         <item>Shop 4</item>
         <item>Shop 5</item>
-<!--        <item>Shop 6</item>-->
-<!--        <item>Shop 7</item>-->
-<!--        <item>Shop 8</item>-->
-<!--        <item>Shop 9</item>-->
+        <!--        <item>Shop 6</item>-->
+        <!--        <item>Shop 7</item>-->
+        <!--        <item>Shop 8</item>-->
+        <!--        <item>Shop 9</item>-->
     </string-array>
 
     <string-array name="shopLocation">
@@ -19,10 +19,10 @@
         <item>Shop Location 2</item>
         <item>Shop Location 3</item>
         <item>Shop Location 4</item>
-<!--        <item>Shop Location 5</item>-->
-<!--        <item>Shop Location 6</item>-->
-<!--        <item>Shop Location 7</item>-->
-<!--        <item>Shop Location 8</item>-->
+        <!--        <item>Shop Location 5</item>-->
+        <!--        <item>Shop Location 6</item>-->
+        <!--        <item>Shop Location 7</item>-->
+        <!--        <item>Shop Location 8</item>-->
     </string-array>
 
     <string-array name="shopCategory">
@@ -31,9 +31,9 @@
         <item>Shop Category 2</item>
         <item>Shop Category 3</item>
         <item>Shop Category 4</item>
-<!--        <item>Shop Category 1</item>-->
-<!--        <item>Shop Category 2</item>-->
-<!--        <item>Shop Category 3</item>-->
-<!--        <item>Shop Category 4</item>-->
+        <!--        <item>Shop Category 1</item>-->
+        <!--        <item>Shop Category 2</item>-->
+        <!--        <item>Shop Category 3</item>-->
+        <!--        <item>Shop Category 4</item>-->
     </string-array>
 </resources>
