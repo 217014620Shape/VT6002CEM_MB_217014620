@@ -1,6 +1,7 @@
 package com.example.mobile_217014620
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -36,13 +37,18 @@ class ShopListActivity : AppCompatActivity() {
         val listView: ListView = this.findViewById(R.id.listViewComplex)
         val listAdapter = ShopAdapter(this, R.layout.home_page_item_list, shopList)
         listView.adapter = listAdapter
-        //using lambda syntax
+        // using lambda syntax
         listView.setOnItemClickListener { parent, view, position, id ->
             Toast.makeText(this, "You clicked ${shopList[position].name}", Toast.LENGTH_LONG).show()
+
+            val intent = Intent(this, DetailListActivity::class.java)
+            intent.putExtra("name", shopList[position].name);
+            intent.putExtra("location", shopList[position].location);
+            intent.putExtra("category", shopList[position].category);
+            intent.putExtra("photo", shopList[position].photo);
+            startActivity(intent)
         }
-
     }
-
 }
 
 //subclass of ArrayList<T>, you need to inherit the constructor as well.
