@@ -1,7 +1,9 @@
 package com.example.mobile_217014620
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 
@@ -26,4 +28,9 @@ class DetailListActivity : AppCompatActivity() {
             this.findViewById<TextView>(R.id.value_category).text = category
         }
     }
+
+    fun backToShopList(view: View){
+        startActivity(Intent(this, ShopListActivity::class.java))
+    }
+
 }
