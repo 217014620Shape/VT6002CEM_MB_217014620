@@ -32,5 +32,8 @@ class DetailListActivity : AppCompatActivity() {
     fun backToShopList(view: View){
         startActivity(Intent(this, ShopListActivity::class.java))
     }
+    fun uploadImage(view: View){
+        startActivity(Intent(this, CameraActivity::class.java))
+    }
 
 }
