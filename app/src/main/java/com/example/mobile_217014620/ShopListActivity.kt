@@ -61,7 +61,7 @@ class ShopListActivity : AppCompatActivity() {
             R.drawable.d1,
             R.drawable.e1,
         )
-        var shopList = ArrayList<Shop>()
+        val shopList = ArrayList<Shop>()
 
         @Override
         for (i in 0 until nameList.size) {
@@ -69,10 +69,10 @@ class ShopListActivity : AppCompatActivity() {
             shopList.add(s)
         }
 
+        // listView config
         val listView: ListView = this.findViewById(R.id.listViewComplex)
         val listAdapter = ShopAdapter(this, R.layout.home_page_item_list, shopList)
         listView.adapter = listAdapter
-        // using lambda syntax
         listView.setOnItemClickListener { parent, view, position, id ->
             Toast.makeText(this, "You clicked ${shopList[position].name}", Toast.LENGTH_LONG).show()
 
@@ -97,10 +97,10 @@ class ShopAdapter(context: Context, resource: Int, objects: MutableList<Shop>) :
             val layoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
             v = layoutInflater.inflate(resource, parent, false)
         }
-        var imageView = v!!.findViewById<ImageView>(R.id.imageView)
-        var textViewName = v!!.findViewById<TextView>(R.id.textViewName)
-        var textViewLocation = v!!.findViewById<TextView>(R.id.textViewLocation)
-        var textViewCategory = v!!.findViewById<TextView>(R.id.textViewCategory)
+        val imageView = v!!.findViewById<ImageView>(R.id.imageView)
+        val textViewName = v!!.findViewById<TextView>(R.id.textViewName)
+        val textViewLocation = v!!.findViewById<TextView>(R.id.textViewLocation)
+        val textViewCategory = v!!.findViewById<TextView>(R.id.textViewCategory)
         imageView.setImageResource(shops[position].photo)
         textViewName.text = shops[position].name
         textViewLocation.text = shops[position].location
