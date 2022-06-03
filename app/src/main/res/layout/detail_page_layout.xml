@@ -131,7 +131,9 @@
                     android:layout_margin="5dp"
                     android:layout_marginLeft="2dp"
                     android:layout_marginRight="2dp"
-                    android:text="Back" />
+                    android:text="Back"
+                    android:onClick="backToShopList"
+                    />
             </LinearLayout>
 
             <View
