@@ -2,7 +2,6 @@ package com.example.mobile_217014620
 
 import android.os.Bundle
 import android.util.Log
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 
@@ -21,6 +20,10 @@ class DetailListActivity : AppCompatActivity() {
             Log.d("DetailListActivity", "location -> " + location);
             Log.d("DetailListActivity", "category -> " + category);
             Log.d("DetailListActivity", "photo -> " + photo);
+
+            this.findViewById<TextView>(R.id.value_name).text = name
+            this.findViewById<TextView>(R.id.value_location).text = location
+            this.findViewById<TextView>(R.id.value_category).text = category
         }
     }
 }
