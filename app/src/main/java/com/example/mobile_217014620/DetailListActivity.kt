@@ -11,6 +11,8 @@ import androidx.appcompat.app.AppCompatActivity
 class DetailListActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        assert(supportActionBar != null)
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         setContentView(R.layout.detail_page_layout)
 
         val extras = intent.extras
@@ -23,6 +25,10 @@ class DetailListActivity : AppCompatActivity() {
             this.findViewById<TextView>(R.id.value_location).text = location
             this.findViewById<TextView>(R.id.value_category).text = category
         }
+    }
+    override fun onSupportNavigateUp(): Boolean {
+        finish()
+        return true
     }
     fun backToShopList(view: View){
         startActivity(Intent(this, ShopListActivity::class.java))

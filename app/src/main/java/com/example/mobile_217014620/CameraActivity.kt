@@ -40,6 +40,9 @@ class CameraActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.camera_page_layout)
 
+        assert(supportActionBar != null)
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+
         takePhoto = findViewById(R.id.takePhoto)
         upload = findViewById(R.id.upload)
         photo = findViewById(R.id.photo)
@@ -57,7 +60,10 @@ class CameraActivity : AppCompatActivity() {
             Toast.makeText(this, "Upload to firebase is coming soon", Toast.LENGTH_LONG).show()
         }
     }
-
+    override fun onSupportNavigateUp(): Boolean {
+        finish()
+        return true
+    }
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         Log.d("DetailListActivity", "//onActivityResult//")

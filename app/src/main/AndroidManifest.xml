@@ -31,23 +31,28 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyCcERldt-bU18eviJs53dCczMIsvBEm9jQ" />
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value=".MainActivity" />
 
         <activity
             android:name=".MapsActivity"
             android:exported="false"
-            android:label="@string/title_activity_maps" />
+            android:label="@string/title_activity_maps"
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".DetailListActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".CameraActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".DetailListActivity"/>
         <activity
             android:name=".ShopListActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

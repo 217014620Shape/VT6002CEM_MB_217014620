@@ -19,6 +19,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        assert(supportActionBar != null)
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+
         binding = MapsPageLayoutBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -26,7 +29,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
     }
-
+    override fun onSupportNavigateUp(): Boolean {
+        finish()
+        return true
+    }
     /**
      * Manipulates the map once available.
      * This callback is triggered when the map is ready to be used.
