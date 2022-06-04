@@ -1,26 +1,38 @@
 package com.example.mobile_217014620
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-
+import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
+import com.example.mobile_217014620.databinding.MapsPageLayoutBinding
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import com.example.mobile_217014620.databinding.MapsPageLayoutBinding
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var mMap: GoogleMap
     private lateinit var binding: MapsPageLayoutBinding
+    private var length: Int = 0
+    private var names: Array<String>? = arrayOf()
+    private var placeXs: Array<String>? = arrayOf()
+    private var placeYs: Array<String>? = arrayOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         assert(supportActionBar != null)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+
+        val extras = intent.extras
+        if (extras != null) {
+            length = extras.getInt("length")
+            names = extras.getStringArray("names")
+            placeXs = extras.getStringArray("placeXs")
+            placeYs = extras.getStringArray("placeYs")
+        }
 
         binding = MapsPageLayoutBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -44,10 +56,19 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
      */
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
-
-        // Add a marker in Sydney and move the camera
-        val sydney = LatLng(-34.0, 151.0)
-        mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+        if (names != null) {
+            if (placeXs != null) {
+                if (placeYs != null) {
+                    for (i in 0..length-1) {
+                        val x = placeXs!![i].toDouble()
+                        val y = placeYs!![i].toDouble()
+                        val shop = LatLng(x, y)
+                        mMap.addMarker(MarkerOptions().position(shop).title(names!![i]))
+                    }
+                }
+            }
+        }
+        val make = LatLng(22.31950, 114.17013)
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(make, 10f))
     }
 }
