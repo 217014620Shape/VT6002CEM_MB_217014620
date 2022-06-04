@@ -2,6 +2,7 @@ package com.example.mobile_217014620
 
 import android.content.Intent
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import android.view.View
 import android.widget.TextView
@@ -18,22 +19,18 @@ class DetailListActivity : AppCompatActivity() {
             val location = extras.getString("location")
             val category = extras.getString("category")
             val photo = extras.getInt("photo")
-            Log.d("DetailListActivity", "name -> " + name);
-            Log.d("DetailListActivity", "location -> " + location);
-            Log.d("DetailListActivity", "category -> " + category);
-            Log.d("DetailListActivity", "photo -> " + photo);
-
             this.findViewById<TextView>(R.id.value_name).text = name
             this.findViewById<TextView>(R.id.value_location).text = location
             this.findViewById<TextView>(R.id.value_category).text = category
         }
     }
-
     fun backToShopList(view: View){
         startActivity(Intent(this, ShopListActivity::class.java))
     }
     fun uploadImage(view: View){
         startActivity(Intent(this, CameraActivity::class.java))
     }
-
+    fun openMap(view: View){
+        startActivity(Intent(this, MapsActivity::class.java))
+    }
 }
