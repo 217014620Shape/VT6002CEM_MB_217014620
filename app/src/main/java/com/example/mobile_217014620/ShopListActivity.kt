@@ -65,6 +65,7 @@ class ShopListActivity : AppCompatActivity() {
             R.drawable.c1,
             R.drawable.d1,
             R.drawable.e1,
+            R.drawable.f1,
         )
         val shopList = ArrayList<Shop>()
 
@@ -79,6 +80,7 @@ class ShopListActivity : AppCompatActivity() {
         listView.setOnItemClickListener { parent, view, position, id ->
             Toast.makeText(this, "Go ${shopList[position].name}", Toast.LENGTH_LONG).show()
             val intent = Intent(this, DetailListActivity::class.java)
+            intent.putExtra("position", ""+position)
             intent.putExtra("name", shopList[position].name)
             intent.putExtra("location", shopList[position].location)
             intent.putExtra("category", shopList[position].category)
