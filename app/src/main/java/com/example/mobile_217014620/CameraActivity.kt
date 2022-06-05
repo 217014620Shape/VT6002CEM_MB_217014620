@@ -66,8 +66,6 @@ class CameraActivity : AppCompatActivity() {
     }
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        Log.d("DetailListActivity", "//onActivityResult//")
-
         if (requestCode == cameraRequestId) {
             /**save to Image In layout*/
             val images: Bitmap = data?.extras?.get("data") as Bitmap
