@@ -1,6 +1,7 @@
 buildscript {
     repositories {
-        google()  // Google's Maven repository
+        google()
+//        jcenter()
     }
     dependencies {
         classpath 'com.google.gms:google-services:4.3.10'
@@ -12,12 +13,12 @@ plugins {
     id 'org.jetbrains.kotlin.android' version '1.6.21' apply false
     id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin' version '2.0.0' apply false
 }
-
+//allprojects {
+//    google()
+//    repositories {
+//        jcenter()
+//    }
+//}
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
-//allprojects {
-//    repositories {
-//        google()
-//    }
-//}

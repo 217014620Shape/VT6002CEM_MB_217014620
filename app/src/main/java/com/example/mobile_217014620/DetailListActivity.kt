@@ -53,6 +53,7 @@ class DetailListActivity : AppCompatActivity() {
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         setContentView(R.layout.detail_page_layout)
 
+        this.findViewById<ImageView>(R.id.imageView_cmt).setImageResource(R.drawable.cmt)
         val extras = intent.extras
         if (extras != null) {
             name = extras.getString("name")!!

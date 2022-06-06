@@ -18,12 +18,12 @@ data class Shop(val name: String, val location: String, val category: String, va
 
 class ShopListActivity : AppCompatActivity() {
 
-    val nameList: MutableList<String?> = ArrayList()
-    val locationList: MutableList<String?> = ArrayList()
-    val categoryList: MutableList<String?> = ArrayList()
-//    val imgList: MutableList<String?> = ArrayList()
-    val placeXList: MutableList<String?> = ArrayList()
-    val placeYList: MutableList<String?> = ArrayList()
+    private val nameList: MutableList<String?> = ArrayList()
+    private val locationList: MutableList<String?> = ArrayList()
+    private val categoryList: MutableList<String?> = ArrayList()
+//    private val imgList: MutableList<String?> = ArrayList()
+    private val placeXList: MutableList<String?> = ArrayList()
+    private val placeYList: MutableList<String?> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,18 +36,21 @@ class ShopListActivity : AppCompatActivity() {
         myRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 for (ds in dataSnapshot.children) {
-                    val name = ds.child("name").getValue(String::class.java)
-                    val location = ds.child("location").getValue(String::class.java)
-                    val category = ds.child("category").getValue(String::class.java)
-//                    val img = ds.child("img").getValue(String::class.java)
-                    val placeX = ds.child("placeX").getValue(String::class.java)
-                    val placeY = ds.child("placeY").getValue(String::class.java)
-                    nameList.add(name)
-                    locationList.add(location)
-                    categoryList.add(category)
-//                    imgList.add(img)
-                    placeXList.add(placeX)
-                    placeYList.add(placeY)
+                    if(ds.child("name").getValue(String::class.java).toString() != "null") {
+                        val name = ds.child("name").getValue(String::class.java)
+                        Log.w("DetailListActivity", "name => $name")
+                        val location = ds.child("location").getValue(String::class.java)
+                        val category = ds.child("category").getValue(String::class.java)
+                        // val img = ds.child("img").getValue(String::class.java)
+                        val placeX = ds.child("placeX").getValue(String::class.java)
+                        val placeY = ds.child("placeY").getValue(String::class.java)
+                        nameList.add(name)
+                        locationList.add(location)
+                        categoryList.add(category)
+                        // imgList.add(img)
+                        placeXList.add(placeX)
+                        placeYList.add(placeY)
+                    }
                 }
                 step2(nameList, locationList, categoryList, placeXList, placeYList)
             }
