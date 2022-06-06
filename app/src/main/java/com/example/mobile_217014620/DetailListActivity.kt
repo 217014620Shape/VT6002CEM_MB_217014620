@@ -8,13 +8,16 @@ import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.*
+import com.google.firebase.database.*
 
+data class cmt(val name: String, val cmt: String)
 
 class DetailListActivity : AppCompatActivity() {
     private var name: String = ""
     private var placeX: String = ""
     private var placeY: String = ""
     private var position: String = ""
+    private var lastCMT: String = ""
 
     private var shopPhotosA: Array<Int> = arrayOf(
         R.drawable.a1,
@@ -41,6 +44,8 @@ class DetailListActivity : AppCompatActivity() {
         R.drawable.f2,
         R.drawable.f3,
     )
+
+//    private lateinit var database: DatabaseReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -83,6 +88,25 @@ class DetailListActivity : AppCompatActivity() {
             }
         }
 
+        val comment: EditText = this.findViewById(R.id.commentEdit)
+        val database = FirebaseDatabase.getInstance()
+        val myRef = database.getReference("shopList").child("comment")
+
+        // Read from the database
+        myRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                for (ds in dataSnapshot.children) {
+                    if(ds.key == "shop1"){
+                        lastCMT = ds.childrenCount.toString()
+                    }
+                }
+            }
+            override fun onCancelled(error: DatabaseError) {
+                // Failed to read value
+                Log.w("DetailListActivity", "Failed to read value.", error.toException())
+            }
+        })
+
     }
     override fun onSupportNavigateUp(): Boolean {
         finish()
@@ -104,4 +128,26 @@ class DetailListActivity : AppCompatActivity() {
         intent.putExtra("placeYs", arrayOf(placeY))
         startActivity(intent)
     }
+    fun commentSubmit(view: View){
+        val comment: EditText = this.findViewById(R.id.commentEdit)
+        val txt: String = ""+comment.text
+        val database = FirebaseDatabase.getInstance()
+        val myRef = database.getReference("shopList")
+        Log.d("DetailListActivity", "$"+comment.text)
+        Log.d("DetailListActivity", "lastCMT => $lastCMT")
+        myRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val database = FirebaseDatabase.getInstance().getReference("shopList")
+                insertCMT("userID", txt, database)
+            }
+            override fun onCancelled(error: DatabaseError) {
+                Log.d("DetailListActivity", "false")
+            }
+        })
+    }
+    fun insertCMT(name: String, cmt: String, database: DatabaseReference) {
+        val newCMT = cmt(name, cmt)
+        database.child("comment").child("shop1").child(lastCMT).setValue(newCMT)
+    }
+
 }
