@@ -1,9 +1,11 @@
 package com.example.mobile_217014620
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import com.example.mobile_217014620.databinding.MapsPageLayoutBinding
+import androidx.core.app.ActivityCompat
+import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -11,10 +13,15 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 
+import android.location.Location
+import com.google.android.gms.location.FusedLocationProviderClient
+
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
-    private lateinit var mMap: GoogleMap
-    private lateinit var binding: MapsPageLayoutBinding
+    var currentLocation : Location? = null
+    var fusedLocationProviderClient: FusedLocationProviderClient? = null
+    val REQUEST_CODE = 101
+
     private var length: Int = 0
     private var names: Array<String>? = arrayOf()
     private var placeXs: Array<String>? = arrayOf()
@@ -22,9 +29,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.maps_page_layout)
 
-        assert(supportActionBar != null)
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
+        fetchLocation()
 
         val extras = intent.extras
         if (extras != null) {
@@ -33,30 +41,32 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             placeXs = extras.getStringArray("placeXs")
             placeYs = extras.getStringArray("placeYs")
         }
-
-        binding = MapsPageLayoutBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        val mapFragment = supportFragmentManager
-            .findFragmentById(R.id.map) as SupportMapFragment
-        mapFragment.getMapAsync(this)
     }
     override fun onSupportNavigateUp(): Boolean {
         finish()
         return true
     }
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
+    private fun fetchLocation() {
+        if (ActivityCompat.checkSelfPermission(this,Manifest.permission.ACCESS_FINE_LOCATION)
+            != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this,Manifest.permission.ACCESS_COARSE_LOCATION)
+            != PackageManager.PERMISSION_GRANTED)
+        {
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), REQUEST_CODE)
+            return
+        }
+
+        val task = fusedLocationProviderClient!!.lastLocation
+        task.addOnSuccessListener { location ->
+            if (location != null){
+                currentLocation = location
+                val supportMapFragment = (supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?)
+                supportMapFragment!!.getMapAsync(this@MapsActivity)
+            }
+        }
+    }
+
     override fun onMapReady(googleMap: GoogleMap) {
-        mMap = googleMap
+
         if (names != null) {
             if (placeXs != null) {
                 if (placeYs != null) {
@@ -64,12 +74,26 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                         val x = placeXs!![i].toDouble()
                         val y = placeYs!![i].toDouble()
                         val shop = LatLng(x, y)
-                        mMap.addMarker(MarkerOptions().position(shop).title(names!![i]))
+                        googleMap.addMarker(MarkerOptions().position(shop).title(names!![i]))
                     }
                 }
             }
         }
-        val make = LatLng(22.31950, 114.17013)
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(make, 10f))
+        val latLng = LatLng(currentLocation!!.latitude, currentLocation!!.longitude)
+        val markerOptions = MarkerOptions().position(latLng).title("I Am Here!")
+        googleMap.animateCamera(CameraUpdateFactory.newLatLng(latLng))
+        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,10f))
+        googleMap.addMarker(markerOptions)
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        when(requestCode){
+            REQUEST_CODE -> {
+                if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                    fetchLocation()
+                }
+            }
+        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 }
