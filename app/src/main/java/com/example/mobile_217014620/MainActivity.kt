@@ -23,6 +23,14 @@ private lateinit var biometricPrompt: BiometricPrompt
 private lateinit var promptInfo: BiometricPrompt.PromptInfo
 
 class MainActivity : AppCompatActivity() {
+
+    private var username : String = ""
+    private var sharedPreferences: SharedPreferences? = null
+
+    companion object {
+        const val USERNAME_KEY  = "USERNAME_KEY"
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -30,6 +38,10 @@ class MainActivity : AppCompatActivity() {
         var tvFail: TextView =  this.findViewById<TextView>(R.id.fail)
         val editTextName = this.findViewById<EditText>(R.id.username)
 
+        sharedPreferences = getSharedPreferences("USER", MODE_PRIVATE)
+        if (sharedPreferences!!.contains(USERNAME_KEY)) {
+            editTextName!!.setText(sharedPreferences!!.getString(USERNAME_KEY, ""))
+        }
 
         executor = ContextCompat.getMainExecutor(this)
 
@@ -60,6 +72,9 @@ class MainActivity : AppCompatActivity() {
             var username: String = this.findViewById<EditText>(R.id.username).text.toString()
             if(username != ""){
                 biometricPrompt.authenticate(promptInfo)
+                val editor = sharedPreferences!!.edit()
+                editor.putString(USERNAME_KEY, editTextName!!.text.toString())
+                editor.commit()
             }else{
                 tvFail.text = "Please insert username"
             }
