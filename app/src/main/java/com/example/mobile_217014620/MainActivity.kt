@@ -41,6 +41,7 @@ class MainActivity : AppCompatActivity() {
             override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
                 super.onAuthenticationSucceeded(result)
                 Toast.makeText(applicationContext,"Authentication succeeded!", Toast.LENGTH_SHORT).show()
+                authSuccess()
             }
             override fun onAuthenticationFailed() {
                 super.onAuthenticationFailed()
@@ -63,6 +64,14 @@ class MainActivity : AppCompatActivity() {
                 tvFail.text = "Please insert username"
             }
         }
+    }
+
+    private fun authSuccess(){
+        username = this.findViewById<EditText>(R.id.username).text.toString()
+        Log.d("DetailListActivity", "=> $username")
+        val intent = Intent(this, ShopListActivity::class.java)
+        intent.putExtra("username", username)
+        startActivity(intent)
     }
 
     override fun onResume() {

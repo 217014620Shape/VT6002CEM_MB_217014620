@@ -24,14 +24,22 @@ class ShopListActivity : AppCompatActivity() {
 //    private val imgList: MutableList<String?> = ArrayList()
     private val placeXList: MutableList<String?> = ArrayList()
     private val placeYList: MutableList<String?> = ArrayList()
+    private var username: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.home_page_layout)
 
+        val extras = intent.extras
+        if (extras != null) {
+            username = extras.getString("username").toString()
+        }
+        Log.d("DetailListActivity",username)
+
+        this.findViewById<TextView>(R.id.hellouser).text = "Hi! $username"
+
         val database = FirebaseDatabase.getInstance()
         val myRef = database.getReference("shopList")
-
         // Read from the database
         myRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
