@@ -13,7 +13,7 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_margin="5dp"
-            tools:srcCompat="@drawable/comment"
+            tools:srcCompat="@drawable/cmt"
             android:scaleType="centerCrop" />
 
         <TableRow>
@@ -29,11 +29,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="User Name"
-                    android:textSize="13sp"
-                    android:textStyle="bold" />
+                    android:textSize="13sp" />
 
                 <TextView
-                    android:id="@+id/textViewLocation"
+                    android:id="@+id/textViewCMT"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"

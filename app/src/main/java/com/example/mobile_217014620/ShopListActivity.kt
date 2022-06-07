@@ -38,7 +38,6 @@ class ShopListActivity : AppCompatActivity() {
                 for (ds in dataSnapshot.children) {
                     if(ds.child("name").getValue(String::class.java).toString() != "null") {
                         val name = ds.child("name").getValue(String::class.java)
-                        Log.w("DetailListActivity", "name => $name")
                         val location = ds.child("location").getValue(String::class.java)
                         val category = ds.child("category").getValue(String::class.java)
                         // val img = ds.child("img").getValue(String::class.java)
@@ -81,7 +80,7 @@ class ShopListActivity : AppCompatActivity() {
         val listAdapter = ShopAdapter(this, R.layout.home_page_item_list, shopList)
         listView.adapter = listAdapter
         listView.setOnItemClickListener { parent, view, position, id ->
-            Toast.makeText(this, "Go ${shopList[position].name}", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "Go ${shopList[position].name} , $position", Toast.LENGTH_LONG).show()
             val intent = Intent(this, DetailListActivity::class.java)
             intent.putExtra("position", ""+position)
             intent.putExtra("name", shopList[position].name)

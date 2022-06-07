@@ -7,13 +7,11 @@ import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.*
-import com.google.firebase.database.*
-
-data class cmt(val name: String, val cmt: String)
 
 class DetailListActivity : AppCompatActivity() {
     private var name: String = ""
+    private var location: String = ""
+    private var category: String = ""
     private var placeX: String = ""
     private var placeY: String = ""
     private var position: String = ""
@@ -45,7 +43,9 @@ class DetailListActivity : AppCompatActivity() {
         R.drawable.f3,
     )
 
-//    private lateinit var database: DatabaseReference
+    private var nameList: MutableList<String?> = ArrayList()
+    private var txtList: MutableList<String?> = ArrayList()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,21 +53,23 @@ class DetailListActivity : AppCompatActivity() {
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         setContentView(R.layout.detail_page_layout)
 
-        this.findViewById<ImageView>(R.id.imageView_cmt).setImageResource(R.drawable.cmt)
+        // get data from previous page
         val extras = intent.extras
         if (extras != null) {
-            name = extras.getString("name")!!
-            val location = extras.getString("location")
-            val category = extras.getString("category")
-            val position = extras.getString("position")
+            name = extras.getString("name").toString()
+            location = extras.getString("location").toString()
+            category = extras.getString("category").toString()
+            position = extras.getString("position").toString()
 //            val photo = extras.getInt("photo")
-            placeX = extras.getString("placeX")!!
-            placeY = extras.getString("placeY")!!
+            placeX = extras.getString("placeX").toString()
+            placeY = extras.getString("placeY").toString()
 
+            // get data from previous page - set up text
             this.findViewById<TextView>(R.id.value_name).text = name
             this.findViewById<TextView>(R.id.value_location).text = location
             this.findViewById<TextView>(R.id.value_category).text = category
 
+            // get data from previous page - set up image
             val layout = findViewById<View>(R.id.galleryShopImage) as LinearLayout
             val layoutParams = LinearLayout.LayoutParams(800, 500)
             var shopPhotos: Array<Int> = arrayOf()
@@ -88,26 +90,6 @@ class DetailListActivity : AppCompatActivity() {
                 layout.addView(imageView)
             }
         }
-
-        val comment: EditText = this.findViewById(R.id.commentEdit)
-        val database = FirebaseDatabase.getInstance()
-        val myRef = database.getReference("shopList").child("comment")
-
-        // Read from the database
-        myRef.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                for (ds in dataSnapshot.children) {
-                    if(ds.key == "shop1"){
-                        lastCMT = ds.childrenCount.toString()
-                    }
-                }
-            }
-            override fun onCancelled(error: DatabaseError) {
-                // Failed to read value
-                Log.w("DetailListActivity", "Failed to read value.", error.toException())
-            }
-        })
-
     }
     override fun onSupportNavigateUp(): Boolean {
         finish()
@@ -129,26 +111,10 @@ class DetailListActivity : AppCompatActivity() {
         intent.putExtra("placeYs", arrayOf(placeY))
         startActivity(intent)
     }
-    fun commentSubmit(view: View){
-        val comment: EditText = this.findViewById(R.id.commentEdit)
-        val txt: String = ""+comment.text
-        val database = FirebaseDatabase.getInstance()
-        val myRef = database.getReference("shopList")
-        Log.d("DetailListActivity", "$"+comment.text)
-        Log.d("DetailListActivity", "lastCMT => $lastCMT")
-        myRef.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                val database = FirebaseDatabase.getInstance().getReference("shopList")
-                insertCMT("userID", txt, database)
-            }
-            override fun onCancelled(error: DatabaseError) {
-                Log.d("DetailListActivity", "false")
-            }
-        })
+    fun openCMT(view: View){
+        val positionINT : Int = position.toInt()+1
+        val intent = Intent(this, CommentActivity::class.java)
+        intent.putExtra("shop", "shop$positionINT")
+        startActivity(intent)
     }
-    fun insertCMT(name: String, cmt: String, database: DatabaseReference) {
-        val newCMT = cmt(name, cmt)
-        database.child("comment").child("shop1").child(lastCMT).setValue(newCMT)
-    }
-
 }

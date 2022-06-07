@@ -114,6 +114,16 @@
                     android:layout_marginRight="2dp"
                     android:text="Map"
                     android:onClick="openMap" />
+
+                <Button
+                    android:id="@+id/button_cmt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginRight="2dp"
+                    android:text="Comment"
+                    android:onClick="openCMT" />
             </LinearLayout>
 
             <View
@@ -228,72 +238,6 @@
 <!--                android:layout_weight="1"-->
 <!--                android:background="?android:attr/listDivider" />-->
 <!--        </LinearLayout>-->
-
-        <!-- User Comment -->
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <TextView
-                android:id="@+id/title_comment"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="5dp"
-                android:text="User Comment Zone"
-                android:textAlignment="viewStart"
-                android:textSize="24sp"
-                android:textStyle="bold" />
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:id="@+id/imageView_cmt"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_gravity="center"
-                    android:layout_margin="5dp"
-                    android:scaleType="centerCrop"
-                    android:background="@android:color/darker_gray" />
-
-                <LinearLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                    <EditText
-                        android:id="@+id/commentEdit"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:hint="Leave a comment"
-                        android:textSize="13sp" />
-                    <Button
-                        android:id="@+id/btnCommentSubmit"
-                        android:layout_width="wrap_content"
-                        android:layout_height="40dp"
-                        android:layout_gravity="end"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
-                        android:onClick="commentSubmit"
-                        android:text="Submit"
-                        android:textSize="13sp" />
-                </LinearLayout>
-            </LinearLayout>
-        </LinearLayout>
-
-        <!--            android:layout_below="@+id/textView"-->
-        <ListView
-            android:id="@+id/listViewComplex"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0" />
 
     </LinearLayout>
 </ScrollView>
