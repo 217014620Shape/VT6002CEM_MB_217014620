@@ -115,6 +115,7 @@ class DetailListActivity : AppCompatActivity() {
         val positionINT : Int = position.toInt()+1
         val intent = Intent(this, CommentActivity::class.java)
         intent.putExtra("shop", "shop$positionINT")
+        intent.putExtra("name", name)
         startActivity(intent)
     }
 }

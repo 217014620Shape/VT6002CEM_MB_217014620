@@ -18,6 +18,7 @@ data class cmt(val name: String, val txt: String)
 class CommentActivity : AppCompatActivity() {
 
     private var shopName: String = ""
+    private var name: String = ""
     private var nameList: MutableList<String?> = ArrayList()
     private var txtList: MutableList<String?> = ArrayList()
     private var lastCMT: String = ""
@@ -28,12 +29,13 @@ class CommentActivity : AppCompatActivity() {
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         setContentView(R.layout.comment_page_layout)
 
-        this.findViewById<ImageView>(R.id.imageView_cmt).setImageResource(R.drawable.cmt)
         val extras = intent.extras
         if (extras != null) {
             shopName = extras.getString("shop").toString()
+            name = extras.getString("name").toString()
         }
-
+        this.findViewById<ImageView>(R.id.imageView_cmt).setImageResource(R.drawable.cmt)
+        this.findViewById<TextView>(R.id.shop).text = name
         val database = FirebaseDatabase.getInstance()
         val myRef = database.getReference("shopList").child("comment")
 
