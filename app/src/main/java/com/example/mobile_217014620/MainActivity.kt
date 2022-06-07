@@ -1,7 +1,12 @@
 package com.example.mobile_217014620
 
+import android.content.Intent
+import android.content.SharedPreferences
+import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -22,25 +27,26 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        var tvFail: TextView =  this.findViewById<TextView>(R.id.fail)
+        val editTextName = this.findViewById<EditText>(R.id.username)
+
+
         executor = ContextCompat.getMainExecutor(this)
 
-        biometricPrompt = BiometricPrompt(this, executor,
-            object : BiometricPrompt.AuthenticationCallback() {
-                override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
-                    super.onAuthenticationError(errorCode, errString)
-                    Toast.makeText(applicationContext,"Authentication error: $errString", Toast.LENGTH_SHORT).show()
-                }
-
-                override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
-                    super.onAuthenticationSucceeded(result)
-                    Toast.makeText(applicationContext,"Authentication succeeded!", Toast.LENGTH_SHORT).show()
-                }
-
-                override fun onAuthenticationFailed() {
-                    super.onAuthenticationFailed()
-                    Toast.makeText(applicationContext,"Authentication failed", Toast.LENGTH_SHORT).show()
-                }
-            })
+        biometricPrompt = BiometricPrompt(this, executor, object : BiometricPrompt.AuthenticationCallback() {
+            override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
+                super.onAuthenticationError(errorCode, errString)
+                Toast.makeText(applicationContext,"ERROR : $errString", Toast.LENGTH_LONG).show()
+            }
+            override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
+                super.onAuthenticationSucceeded(result)
+                Toast.makeText(applicationContext,"Authentication succeeded!", Toast.LENGTH_SHORT).show()
+            }
+            override fun onAuthenticationFailed() {
+                super.onAuthenticationFailed()
+                tvFail.text = "Failed : Authentication failed. Please retry."
+            }
+        })
 
         promptInfo = BiometricPrompt.PromptInfo.Builder()
             .setTitle("Biometric login for my app")
@@ -50,25 +56,24 @@ class MainActivity : AppCompatActivity() {
 
         val biometricLoginButton = findViewById<Button>(R.id.biometric_login)
         biometricLoginButton.setOnClickListener {
-            biometricPrompt.authenticate(promptInfo)
+            var username: String = this.findViewById<EditText>(R.id.username).text.toString()
+            if(username != ""){
+                biometricPrompt.authenticate(promptInfo)
+            }else{
+                tvFail.text = "Please insert username"
+            }
         }
     }
 
     override fun onResume() {
         super.onResume()
-        val biometricStatusTextView =
-            findViewById<TextView>(R.id.biometric_status)
+        val biometricStatusTextView = findViewById<TextView>(R.id.error)
         val biometricManager = BiometricManager.from(this)
         when (biometricManager.canAuthenticate(BIOMETRIC_STRONG or DEVICE_CREDENTIAL)) {
-            BiometricManager.BIOMETRIC_SUCCESS ->
-                biometricStatusTextView.text = "App can authenticate using biometrics."
-            BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE ->
-                biometricStatusTextView.text = "No biometric features available on this device."
-            BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE ->
-                biometricStatusTextView.text = "Biometric features are currently unavailable."
-            BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED ->
-                // Prompts the user to create credentials that your app accepts.
-                biometricStatusTextView.text = "Biometric features are not enrolled."
+//            BiometricManager.BIOMETRIC_SUCCESS -> biometricStatusTextView.text = "App can authenticate using biometrics."
+            BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE -> biometricStatusTextView.text = "No biometric features available on this device."
+            BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE -> biometricStatusTextView.text = "Biometric features are currently unavailable."
+            BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED -> biometricStatusTextView.text = "Biometric features are not enrolled."
         }
     }
 }
