@@ -3,6 +3,7 @@ package com.example.mobile_217014620
 import androidx.appcompat.app.AppCompatActivity
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Log
@@ -22,6 +23,7 @@ class CommentActivity : AppCompatActivity() {
     private var nameList: MutableList<String?> = ArrayList()
     private var txtList: MutableList<String?> = ArrayList()
     private var lastCMT: String = ""
+    private var sharedPreferences: SharedPreferences? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -76,10 +78,15 @@ class CommentActivity : AppCompatActivity() {
         val txt: String = ""+comment.text
         val database = FirebaseDatabase.getInstance()
         val myRef = database.getReference("shopList")
+        var username: String = "someone"
+        sharedPreferences = getSharedPreferences("USER", MODE_PRIVATE)
+        if (sharedPreferences!!.contains(MainActivity.USERNAME_KEY)) {
+            username = sharedPreferences!!.getString(MainActivity.USERNAME_KEY, "").toString()
+        }
         myRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val database = FirebaseDatabase.getInstance().getReference("shopList")
-                insertCMT("someone", txt, database)
+                insertCMT(username, txt, database)
                 comment.setText("")
             }
             override fun onCancelled(error: DatabaseError) {
