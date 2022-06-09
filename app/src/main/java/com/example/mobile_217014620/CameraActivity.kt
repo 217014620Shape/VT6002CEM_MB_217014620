@@ -50,8 +50,7 @@ class CameraActivity : AppCompatActivity() {
             ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.CAMERA), cameraRequestId)
         /**set camera Open*/
         takePhoto.setOnClickListener {
-            val cameraInt = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-            startActivityForResult(cameraInt, cameraRequestId)
+            openCamera()
         }
     }
 
@@ -93,4 +92,8 @@ class CameraActivity : AppCompatActivity() {
         }
     }
 
+    private fun openCamera(){
+        val cameraInt = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        startActivityForResult(cameraInt, cameraRequestId)
+    }
 }

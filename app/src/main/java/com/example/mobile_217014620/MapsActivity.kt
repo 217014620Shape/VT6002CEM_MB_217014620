@@ -66,7 +66,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
-
         if (names != null) {
             if (placeXs != null) {
                 if (placeYs != null) {

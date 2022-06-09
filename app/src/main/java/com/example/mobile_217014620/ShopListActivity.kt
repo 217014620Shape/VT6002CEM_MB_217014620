@@ -41,6 +41,12 @@ class ShopListActivity : AppCompatActivity() {
         // Read from the database
         myRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
+                nameList.clear()
+                locationList.clear()
+                categoryList.clear()
+                // imgList.add(img)
+                placeXList.clear()
+                placeYList.clear()
                 for (ds in dataSnapshot.children) {
                     if(ds.child("name").getValue(String::class.java).toString() != "null") {
                         val name = ds.child("name").getValue(String::class.java)
@@ -61,7 +67,7 @@ class ShopListActivity : AppCompatActivity() {
             }
             override fun onCancelled(error: DatabaseError) {
                 // Failed to read value
-                Log.w("DetailListActivity", "Failed to read value.", error.toException())
+                Log.w("HKTCA", "Failed to read value.", error.toException())
             }
         })
     }
@@ -86,7 +92,7 @@ class ShopListActivity : AppCompatActivity() {
         val listAdapter = ShopAdapter(this, R.layout.home_page_item_list, shopList)
         listView.adapter = listAdapter
         listView.setOnItemClickListener { parent, view, position, id ->
-            Toast.makeText(this, "Go ${shopList[position].name} , $position", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "Go ${shopList[position].name}", Toast.LENGTH_LONG).show()
             val intent = Intent(this, DetailListActivity::class.java)
             intent.putExtra("position", ""+position)
             intent.putExtra("name", shopList[position].name)

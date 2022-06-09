@@ -20,32 +20,6 @@ class DetailListActivity : AppCompatActivity() {
     private var position: String = ""
     private var lastCMT: String = ""
 
-//    private var shopPhotosA: Array<Int> = arrayOf(
-//        R.drawable.a1,
-//        R.drawable.a2,
-//        R.drawable.a3,
-//    )
-//    private var shopPhotosB: Array<Int> = arrayOf(
-//        R.drawable.b1,
-//        R.drawable.b2,
-//        R.drawable.b3,
-//    )
-//    private var shopPhotosC: Array<Int> = arrayOf(
-//        R.drawable.c1,
-//        R.drawable.c2,
-//    )
-//    private var shopPhotosD: Array<Int> = arrayOf(R.drawable.d1)
-//    private var shopPhotosE: Array<Int> = arrayOf(
-//        R.drawable.e1,
-//        R.drawable.e2,
-//        R.drawable.e3,
-//    )
-//    private var shopPhotosF: Array<Int> = arrayOf(
-//        R.drawable.f1,
-//        R.drawable.f2,
-//        R.drawable.f3,
-//    )
-
     private var shopPhotos: MutableList<String?> = ArrayList()
     private var uploadedPhotos: MutableList<String?> = ArrayList()
 
@@ -76,38 +50,11 @@ class DetailListActivity : AppCompatActivity() {
             val layoutU = findViewById<View>(R.id.galleryUploadImage) as LinearLayout
             val layoutParams = LinearLayout.LayoutParams(800, 500)
 
-//            when (position) {
-//                "0" -> {shopPhotos = shopPhotosA}
-//                "1" -> {shopPhotos = shopPhotosB}
-//                "2" -> {shopPhotos = shopPhotosC}
-//                "3" -> {shopPhotos = shopPhotosD}
-//                "4" -> {shopPhotos = shopPhotosE}
-//                "5" -> {shopPhotos = shopPhotosF}
-//            }
             val positionINT : Int = position.toInt()+1
             val database = FirebaseDatabase.getInstance()
-            val myRef = database.getReference("shopList").child("shop$positionINT").child("img")
-            myRef.addValueEventListener(object : ValueEventListener {
-                override fun onDataChange(dataSnapshot: DataSnapshot) {
-                    for ((i, ds) in dataSnapshot.children.withIndex()) {
-                        val link: String = ds.getValue(String::class.java).toString()
-                        shopPhotos.add(link)
-                    }
-                    for (i in shopPhotos.indices) {
-                        val imageView = ImageView(this@DetailListActivity)
-                        imageView.id = i
-                        imageView.setPadding(2, 2, 2, 2)
-                        imageView.layoutParams = layoutParams;
-                        Picasso.get().load(shopPhotos[i]).into(imageView)
-                        layout.addView(imageView)
-                    }
-                }
-                override fun onCancelled(databaseError: DatabaseError) {
-                    // we are showing that error message in toast
-                    Log.d("DetailListActivity", "cancel")
-                }
-            })
+            val shopP = database.getReference("shopList").child("shop$positionINT").child("img")
             val uploadP = database.getReference("image").child("shop$positionINT")
+            shopPhotoLoading(shopP, layoutParams, layout)
             uploadedPhotoLoading(uploadP, layoutParams, layoutU)
         }
     }
@@ -133,14 +80,36 @@ class DetailListActivity : AppCompatActivity() {
         intent.putExtra("name", name)
         startActivity(intent)
     }
+    private fun shopPhotoLoading(myRef: DatabaseReference, layoutParams: LinearLayout.LayoutParams, layout: LinearLayout){
+        myRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                shopPhotos.clear()
+                for ((i, ds) in dataSnapshot.children.withIndex()) {
+                    val link: String = ds.getValue(String::class.java).toString()
+                    shopPhotos.add(link)
+                }
+                for (i in shopPhotos.indices) {
+                    val imageView = ImageView(this@DetailListActivity)
+                    imageView.id = i
+                    imageView.setPadding(2, 2, 2, 2)
+                    imageView.layoutParams = layoutParams;
+                    Picasso.get().load(shopPhotos[i]).into(imageView)
+                    layout.addView(imageView)
+                }
+            }
+            override fun onCancelled(databaseError: DatabaseError) {
+                // we are showing that error message in toast
+                Log.w("HKTCA", "Failed to read value.", error.toException())
+
+            }
+        })
+    }
     private fun uploadedPhotoLoading(myRef: DatabaseReference, layoutParams: LinearLayout.LayoutParams, layout: LinearLayout){
         myRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 uploadedPhotos.clear()
                 for (ds in dataSnapshot.children) {
-                    Log.d("DetailListActivity", "ds => $ds")
                     val link = ds.getValue(String::class.java)
-                    Log.d("DetailListActivity", "childrenCount => ${link}")
                     uploadedPhotos.add(link)
                 }
                 for (i in uploadedPhotos.indices) {
@@ -154,7 +123,7 @@ class DetailListActivity : AppCompatActivity() {
             }
             override fun onCancelled(databaseError: DatabaseError) {
                 // we are showing that error message in toast
-                Log.d("DetailListActivity", "cancel")
+                Log.w("HKTCA", "Failed to read value.", error.toException())
             }
         })
     }

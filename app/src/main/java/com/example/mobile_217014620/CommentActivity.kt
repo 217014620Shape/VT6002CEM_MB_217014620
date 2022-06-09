@@ -48,16 +48,12 @@ class CommentActivity : AppCompatActivity() {
                 txtList.clear()
                 for (ds in dataSnapshot.children) {
                     if(ds.key == shopName){
-                        Log.d("DetailListActivity", "ds => $ds")
                         lastCMT = ds.childrenCount.toString()
                         for (i in 0 until ds.childrenCount){
-                            Log.d("DetailListActivity", "ds i => $i")
                             val name = ds.child(i.toString()).child("name").getValue(String::class.java)
                             val txt = ds.child(i.toString()).child("txt").getValue(String::class.java)
                             nameList.add(name)
                             txtList.add(txt)
-                            Log.d("DetailListActivity", "name => $name")
-
                         }
                     }
                 }
@@ -65,7 +61,7 @@ class CommentActivity : AppCompatActivity() {
             }
             override fun onCancelled(error: DatabaseError) {
                 // Failed to read value
-                Log.w("DetailListActivity", "Failed to read value.", error.toException())
+                Log.w("HKTCA", "Failed to read value.", error.toException())
             }
         })
     }
@@ -90,7 +86,7 @@ class CommentActivity : AppCompatActivity() {
                 comment.setText("")
             }
             override fun onCancelled(error: DatabaseError) {
-                Log.d("DetailListActivity", "false")
+                Log.w("HKTCA", "Failed to read value.", error.toException())
             }
         })
     }
@@ -99,9 +95,6 @@ class CommentActivity : AppCompatActivity() {
         database.child("comment").child(shopName).child(lastCMT).setValue(newCMT)
     }
     fun step2(){
-        Log.d("DetailListActivity", "nameList => ${nameList.size}")
-        Log.d("DetailListActivity", "nameList => $nameList")
-
         val listCMT = ArrayList<cmt>()
         for (i in 0 until nameList.size) {
             val s = cmt(""+nameList[i], ""+txtList[i])
@@ -112,7 +105,6 @@ class CommentActivity : AppCompatActivity() {
         listView.adapter = listAdapter
         listView.setOnItemClickListener { parent, view, position, id ->
             Toast.makeText(this, "Go $position", Toast.LENGTH_LONG).show()
-
         }
     }
 }
