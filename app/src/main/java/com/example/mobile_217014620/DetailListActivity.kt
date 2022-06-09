@@ -8,10 +8,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.*
 import com.squareup.picasso.Picasso
 
 class DetailListActivity : AppCompatActivity() {
@@ -50,7 +47,7 @@ class DetailListActivity : AppCompatActivity() {
 //    )
 
     private var shopPhotos: MutableList<String?> = ArrayList()
-
+    private var uploadedPhotos: MutableList<String?> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -76,6 +73,7 @@ class DetailListActivity : AppCompatActivity() {
 
             // get data from previous page - set up image
             val layout = findViewById<View>(R.id.galleryShopImage) as LinearLayout
+            val layoutU = findViewById<View>(R.id.galleryUploadImage) as LinearLayout
             val layoutParams = LinearLayout.LayoutParams(800, 500)
 
 //            when (position) {
@@ -109,6 +107,8 @@ class DetailListActivity : AppCompatActivity() {
                     Log.d("DetailListActivity", "cancel")
                 }
             })
+            val uploadP = database.getReference("image").child("shop$positionINT")
+            uploadedPhotoLoading(uploadP, layoutParams, layoutU)
         }
     }
     override fun onSupportNavigateUp(): Boolean {
@@ -132,5 +132,30 @@ class DetailListActivity : AppCompatActivity() {
         intent.putExtra("shop", "shop$positionINT")
         intent.putExtra("name", name)
         startActivity(intent)
+    }
+    private fun uploadedPhotoLoading(myRef: DatabaseReference, layoutParams: LinearLayout.LayoutParams, layout: LinearLayout){
+        myRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                uploadedPhotos.clear()
+                for (ds in dataSnapshot.children) {
+                    Log.d("DetailListActivity", "ds => $ds")
+                    val link = ds.getValue(String::class.java)
+                    Log.d("DetailListActivity", "childrenCount => ${link}")
+                    uploadedPhotos.add(link)
+                }
+                for (i in uploadedPhotos.indices) {
+                    val imageView = ImageView(this@DetailListActivity)
+                    imageView.id = i
+                    imageView.setPadding(2, 2, 2, 2)
+                    imageView.layoutParams = layoutParams;
+                    Picasso.get().load(uploadedPhotos[i]).into(imageView)
+                    layout.addView(imageView)
+                }
+            }
+            override fun onCancelled(databaseError: DatabaseError) {
+                // we are showing that error message in toast
+                Log.d("DetailListActivity", "cancel")
+            }
+        })
     }
 }
