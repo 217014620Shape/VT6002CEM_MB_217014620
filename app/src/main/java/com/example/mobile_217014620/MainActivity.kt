@@ -83,7 +83,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun authSuccess(){
         username = this.findViewById<EditText>(R.id.username).text.toString()
-        Log.d("DetailListActivity", "=> $username")
         val intent = Intent(this, ShopListActivity::class.java)
         intent.putExtra("username", username)
         startActivity(intent)

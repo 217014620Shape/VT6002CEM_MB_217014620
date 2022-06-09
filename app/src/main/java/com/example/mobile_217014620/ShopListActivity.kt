@@ -34,8 +34,6 @@ class ShopListActivity : AppCompatActivity() {
         if (extras != null) {
             username = extras.getString("username").toString()
         }
-        Log.d("DetailListActivity",username)
-
         this.findViewById<TextView>(R.id.hellouser).text = "Hi! $username"
 
         val database = FirebaseDatabase.getInstance()

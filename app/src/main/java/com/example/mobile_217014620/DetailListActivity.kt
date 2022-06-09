@@ -23,34 +23,32 @@ class DetailListActivity : AppCompatActivity() {
     private var position: String = ""
     private var lastCMT: String = ""
 
-    private var shopPhotosA: Array<Int> = arrayOf(
-        R.drawable.a1,
-        R.drawable.a2,
-        R.drawable.a3,
-    )
-    private var shopPhotosB: Array<Int> = arrayOf(
-        R.drawable.b1,
-        R.drawable.b2,
-        R.drawable.b3,
-    )
-    private var shopPhotosC: Array<Int> = arrayOf(
-        R.drawable.c1,
-        R.drawable.c2,
-    )
-    private var shopPhotosD: Array<Int> = arrayOf(R.drawable.d1)
-    private var shopPhotosE: Array<Int> = arrayOf(
-        R.drawable.e1,
-        R.drawable.e2,
-        R.drawable.e3,
-    )
-    private var shopPhotosF: Array<Int> = arrayOf(
-        R.drawable.f1,
-        R.drawable.f2,
-        R.drawable.f3,
-    )
+//    private var shopPhotosA: Array<Int> = arrayOf(
+//        R.drawable.a1,
+//        R.drawable.a2,
+//        R.drawable.a3,
+//    )
+//    private var shopPhotosB: Array<Int> = arrayOf(
+//        R.drawable.b1,
+//        R.drawable.b2,
+//        R.drawable.b3,
+//    )
+//    private var shopPhotosC: Array<Int> = arrayOf(
+//        R.drawable.c1,
+//        R.drawable.c2,
+//    )
+//    private var shopPhotosD: Array<Int> = arrayOf(R.drawable.d1)
+//    private var shopPhotosE: Array<Int> = arrayOf(
+//        R.drawable.e1,
+//        R.drawable.e2,
+//        R.drawable.e3,
+//    )
+//    private var shopPhotosF: Array<Int> = arrayOf(
+//        R.drawable.f1,
+//        R.drawable.f2,
+//        R.drawable.f3,
+//    )
 
-    private var nameList: MutableList<String?> = ArrayList()
-    private var txtList: MutableList<String?> = ArrayList()
     private var shopPhotos: MutableList<String?> = ArrayList()
 
 
@@ -122,11 +120,6 @@ class DetailListActivity : AppCompatActivity() {
     }
     fun openMap(view: View){
         val intent = Intent(this, MapsActivity::class.java)
-        Log.d("DetailListActivity", "length => 1")
-        Log.d("DetailListActivity", "names => $name")
-        Log.d("DetailListActivity", "placeXs => $placeX")
-        Log.d("DetailListActivity", "placeYs => $placeY")
-
         intent.putExtra("length", 1)
         intent.putExtra("names", arrayOf(name))
         intent.putExtra("placeXs", arrayOf(placeX))
