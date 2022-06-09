@@ -99,7 +99,7 @@ class DetailListActivity : AppCompatActivity() {
             }
             override fun onCancelled(databaseError: DatabaseError) {
                 // we are showing that error message in toast
-                Log.w("HKTCA", "Failed to read value.", error.toException())
+                Log.w("HKTCA", "Failed to read value.")
 
             }
         })
@@ -123,7 +123,7 @@ class DetailListActivity : AppCompatActivity() {
             }
             override fun onCancelled(databaseError: DatabaseError) {
                 // we are showing that error message in toast
-                Log.w("HKTCA", "Failed to read value.", error.toException())
+                Log.w("HKTCA", "Failed to read value.")
             }
         })
     }
