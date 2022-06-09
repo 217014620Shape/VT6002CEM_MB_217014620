@@ -1,12 +1,18 @@
 package com.example.mobile_217014620
 
 import android.content.Intent
-import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.*
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
+import com.squareup.picasso.Picasso
 
 class DetailListActivity : AppCompatActivity() {
     private var name: String = ""
@@ -45,6 +51,7 @@ class DetailListActivity : AppCompatActivity() {
 
     private var nameList: MutableList<String?> = ArrayList()
     private var txtList: MutableList<String?> = ArrayList()
+    private var shopPhotos: MutableList<String?> = ArrayList()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -72,23 +79,38 @@ class DetailListActivity : AppCompatActivity() {
             // get data from previous page - set up image
             val layout = findViewById<View>(R.id.galleryShopImage) as LinearLayout
             val layoutParams = LinearLayout.LayoutParams(800, 500)
-            var shopPhotos: Array<Int> = arrayOf()
-            when (position) {
-                "0" -> {shopPhotos = shopPhotosA}
-                "1" -> {shopPhotos = shopPhotosB}
-                "2" -> {shopPhotos = shopPhotosC}
-                "3" -> {shopPhotos = shopPhotosD}
-                "4" -> {shopPhotos = shopPhotosE}
-                "5" -> {shopPhotos = shopPhotosF}
-            }
-            for (i in shopPhotos.indices) {
-                val imageView = ImageView(this)
-                imageView.id = i
-                imageView.setPadding(2, 2, 2, 2)
-                imageView.layoutParams = layoutParams;
-                imageView.setImageBitmap(BitmapFactory.decodeResource(resources, shopPhotos[i]))
-                layout.addView(imageView)
-            }
+
+//            when (position) {
+//                "0" -> {shopPhotos = shopPhotosA}
+//                "1" -> {shopPhotos = shopPhotosB}
+//                "2" -> {shopPhotos = shopPhotosC}
+//                "3" -> {shopPhotos = shopPhotosD}
+//                "4" -> {shopPhotos = shopPhotosE}
+//                "5" -> {shopPhotos = shopPhotosF}
+//            }
+            val positionINT : Int = position.toInt()+1
+            val database = FirebaseDatabase.getInstance()
+            val myRef = database.getReference("shopList").child("shop$positionINT").child("img")
+            myRef.addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    for ((i, ds) in dataSnapshot.children.withIndex()) {
+                        val link: String = ds.getValue(String::class.java).toString()
+                        shopPhotos.add(link)
+                    }
+                    for (i in shopPhotos.indices) {
+                        val imageView = ImageView(this@DetailListActivity)
+                        imageView.id = i
+                        imageView.setPadding(2, 2, 2, 2)
+                        imageView.layoutParams = layoutParams;
+                        Picasso.get().load(shopPhotos[i]).into(imageView)
+                        layout.addView(imageView)
+                    }
+                }
+                override fun onCancelled(databaseError: DatabaseError) {
+                    // we are showing that error message in toast
+                    Log.d("DetailListActivity", "cancel")
+                }
+            })
         }
     }
     override fun onSupportNavigateUp(): Boolean {
