@@ -35,6 +35,7 @@ public class DetailListActivityTest {
         textView.check(matches(withSubstring("Name")));
     }
 
+    @Test
     public void detailListButtonTest() {
         ViewInteraction button = onView(
                 allOf(withId(R.id.button_upload), withText("UPLOAD"),

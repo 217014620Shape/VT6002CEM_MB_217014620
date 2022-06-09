@@ -48,6 +48,7 @@ public class ShopListActivityTest {
         textView.check(matches(withSubstring("Hi!")));
     }
 
+    @Test
     public void shopListButtonTest(){
         ViewInteraction button = onView(
                 allOf(withId(R.id.button_switch), withText("Find Maps"),

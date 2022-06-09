@@ -45,6 +45,16 @@ public class MainActivityTest {
             new ActivityScenarioRule<>(MainActivity.class);
 
     @Test
+    public void mainTextViewTest() {
+        ViewInteraction textView = onView(
+                allOf(withId(R.id.headerTitle), withText("Welcome to investigate Hong Kong Traditional Craftsmanship Application"),
+                        withParent(withParent(withId(android.R.id.content))),
+                        isDisplayed()));
+        textView.check(matches(withText("Welcome to investigate Hong Kong Traditional Craftsmanship Application")));
+        textView.check(matches(isDisplayed()));
+    }
+
+    @Test
     public void mainEditTextTest() {
         ViewInteraction editText = onView(
                 allOf(withId(R.id.username), withHint("What is your username?"),
@@ -69,6 +79,7 @@ public class MainActivityTest {
         editText1.check(matches(withText("Jacky")));
     }
 
+    @Test
     public void mainButtonTest(){
         ViewInteraction button = onView(
                 allOf(withId(R.id.biometric_login), withText("LOGIN"),
