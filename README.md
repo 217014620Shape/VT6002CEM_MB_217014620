@@ -3,6 +3,7 @@
 Student Name: Man Chun Ngai
 Student ID: 217014620
 Coursework Title : Designing and Building a mobile App (CW2)
+video link: https://youtu.be/R3OPXG2gVJk
 
 Introduction
 MainActivty
