@@ -2,4 +2,31 @@
     <string name="app_name">HK Traditional Craftsmanship APP</string>
     <string name="title_activity_maps">MapsActivity</string>
 
+
+    <string name="main_input">What is your username?</string>
+    <string name="main_start">Start</string>
+
+    <string name="cam_open1">Open Camera</string>
+    <string name="cam_open2">Open Gallery</string>
+    <string name="cam_upload">Upload</string>
+
+    <string name="com_zone">User Comment Zone</string>
+    <string name="com_shop">shop</string>
+    <string name="com_input">Please feel free to leave any comments here.</string>
+    <string name="com_submit">Submit</string>
+
+    <string name="detaili_un">User Name</string>
+    <string name="detaili_comment">comment</string>
+
+    <string name="detail_upload">Upload</string>
+    <string name="detail_map">Maps</string>
+    <string name="detail_comment">Comment</string>
+
+    <string name="detail_name">Name :</string>
+    <string name="detail_location">Location :</string>
+    <string name="detail_category">Category :</string>
+    <string name="detail_shopImage">Shop Image</string>
+    <string name="detail_userImage">User Uploaded Image</string>
+
+    <string name="home_map">Find Maps</string>
 </resources>

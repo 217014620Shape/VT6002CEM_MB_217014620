@@ -17,7 +17,7 @@
             android:layout_marginLeft="15dp"
             android:layout_marginTop="10dp"
             android:textAlignment="viewStart"
-            android:text="shop"
+            android:text="@string/com_shop"
             android:textSize="24sp"
             android:textStyle="bold" />
         <TextView
@@ -27,7 +27,7 @@
             android:layout_marginLeft="20dp"
             android:layout_marginBottom="10dp"
             android:layout_marginTop="1dp"
-            android:text="User Comment Zone"
+            android:text="@string/com_zone"
             android:textAlignment="viewStart"
             android:textSize="18sp" />
 
@@ -84,7 +84,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:hint="Please feel free to leave any comments here."
+                    android:hint="@string/com_input"
                     android:textSize="13sp" />
 
                 <Button
@@ -95,7 +95,7 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:onClick="commentSubmit"
-                    android:text="Submit"
+                    android:text="@string/Submit"
                     android:textSize="13sp" />
             </LinearLayout>
         </LinearLayout>
