@@ -21,63 +21,61 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10sp"
                     android:layout_marginBottom="5sp"
-                    android:layout_weight=".2"
                     android:text="Name : "
                     android:textAlignment="viewEnd"
                     android:textSize="20sp"
                     android:textStyle="bold" />
                 <TextView
                     android:id="@+id/value_name"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10sp"
                     android:layout_marginBottom="5sp"
-                    android:layout_weight=".8"
                     android:textAlignment="viewStart"
+                    android:layout_weight=".75"
+
                     android:text="TextView"
                     android:textSize="20sp" />
             </TableRow>
             <TableRow>
                 <TextView
                     android:id="@+id/title_location"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10sp"
                     android:layout_marginBottom="5sp"
-                    android:layout_weight=".20"
                     android:text="Location : "
                     android:textAlignment="viewEnd"
                     android:textSize="20sp"
                     android:textStyle="bold" />
                 <TextView
                     android:id="@+id/value_location"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10sp"
                     android:layout_marginBottom="5sp"
-                    android:layout_weight=".8"
+                    android:layout_weight=".75"
                     android:text="TextView"
                     android:textSize="20sp" />
             </TableRow>
             <TableRow>
                 <TextView
                     android:id="@+id/title_category"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10sp"
                     android:layout_marginBottom="5sp"
-                    android:layout_weight=".20"
                     android:text="Category : "
                     android:textAlignment="viewEnd"
                     android:textSize="20sp"
                     android:textStyle="bold" />
                 <TextView
                     android:id="@+id/value_category"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10sp"
                     android:layout_marginBottom="5sp"
-                    android:layout_weight=".8"
+                    android:layout_weight=".75"
                     android:text="TextView"
                     android:textSize="20sp" />
             </TableRow>

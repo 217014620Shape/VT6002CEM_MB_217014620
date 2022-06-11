@@ -65,9 +65,18 @@ class CommentActivity : AppCompatActivity() {
             }
         })
     }
-    override fun onSupportNavigateUp(): Boolean {
-        finish()
-        return true
+    fun step2(){
+        val listCMT = ArrayList<cmt>()
+        for (i in 0 until nameList.size) {
+            val s = cmt(""+nameList[i], ""+txtList[i])
+            listCMT.add(s)
+        }
+        val listView: ListView = this.findViewById(R.id.listViewComplex)
+        val listAdapter = CMTAdapter(this, R.layout.detail_page_item_list, listCMT)
+        listView.adapter = listAdapter
+        listView.setOnItemClickListener { parent, view, position, id ->
+            Toast.makeText(this, "Go $position", Toast.LENGTH_LONG).show()
+        }
     }
     fun commentSubmit(view: View){
         val comment: EditText = this.findViewById(R.id.commentEdit)
@@ -94,18 +103,9 @@ class CommentActivity : AppCompatActivity() {
         val newCMT = cmt(name, txt)
         database.child("comment").child(shopName).child(lastCMT).setValue(newCMT)
     }
-    fun step2(){
-        val listCMT = ArrayList<cmt>()
-        for (i in 0 until nameList.size) {
-            val s = cmt(""+nameList[i], ""+txtList[i])
-            listCMT.add(s)
-        }
-        val listView: ListView = this.findViewById(R.id.listViewComplex)
-        val listAdapter = CMTAdapter(this, R.layout.detail_page_item_list, listCMT)
-        listView.adapter = listAdapter
-        listView.setOnItemClickListener { parent, view, position, id ->
-            Toast.makeText(this, "Go $position", Toast.LENGTH_LONG).show()
-        }
+    override fun onSupportNavigateUp(): Boolean {
+        finish()
+        return true
     }
 }
 

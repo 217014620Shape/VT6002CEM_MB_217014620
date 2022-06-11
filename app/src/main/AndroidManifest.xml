@@ -37,24 +37,24 @@
 
         <activity
             android:name=".CommentActivity"
-            android:exported="true"
+            android:exported="false"
             android:parentActivityName=".DetailListActivity" />
         <activity
             android:name=".MapsActivity"
-            android:exported="true"
+            android:exported="false"
             android:label="@string/title_activity_maps"
             android:parentActivityName=".MainActivity" />
         <activity
             android:name=".DetailListActivity"
-            android:exported="true"
+            android:exported="false"
             android:parentActivityName=".MainActivity" />
         <activity
             android:name=".CameraActivity"
-            android:exported="true"
-            android:parentActivityName=".DetailListActivity" />
+            android:exported="false"
+            android:parentActivityName=".ShopListActivity" />
         <activity
             android:name=".ShopListActivity"
-            android:exported="true"
+            android:exported="false"
             android:parentActivityName=".MainActivity" />
         <activity
             android:name=".MainActivity"

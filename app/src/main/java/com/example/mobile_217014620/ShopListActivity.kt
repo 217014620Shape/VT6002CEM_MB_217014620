@@ -2,6 +2,7 @@ package com.example.mobile_217014620
 
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -25,6 +26,7 @@ class ShopListActivity : AppCompatActivity() {
     private val placeXList: MutableList<String?> = ArrayList()
     private val placeYList: MutableList<String?> = ArrayList()
     private var username: String = ""
+    private var sharedPreferences: SharedPreferences? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,6 +35,11 @@ class ShopListActivity : AppCompatActivity() {
         val extras = intent.extras
         if (extras != null) {
             username = extras.getString("username").toString()
+        } else{
+            sharedPreferences = getSharedPreferences("USER", MODE_PRIVATE)
+            if (sharedPreferences!!.contains(MainActivity.USERNAME_KEY)) {
+                username = sharedPreferences!!.getString(MainActivity.USERNAME_KEY, "").toString()
+            }
         }
         this.findViewById<TextView>(R.id.hellouser).text = "Hi! $username"
 

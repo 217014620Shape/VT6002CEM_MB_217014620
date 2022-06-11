@@ -86,7 +86,7 @@ class CameraActivity : AppCompatActivity() {
         if (filePath != null) {
             val ref = storageReference?.child("myImages/" + UUID.randomUUID().toString())
             val uploadTask = ref?.putFile(filePath!!)
-
+            Toast.makeText(this, "Please wait for admin image validation.", Toast.LENGTH_LONG).show()
         } else {
             Toast.makeText(this, "Please Upload an Image", Toast.LENGTH_SHORT).show()
         }
